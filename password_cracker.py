@@ -18,7 +18,7 @@ def crack_sha1_hash(hash, use_salts=None):
             password = password.strip().encode('utf-8')
             for salt in known_salts:
                 salt = salt.strip().encode('utf-8')
-                hash_obj = hashlib.pbkdf2_hmac('sha1', password=password, salt=salt, iterations=1000).hex()
+                hash_obj = hashlib.pbkdf2_hmac('sha1', password=password, salt=salt, iterations=1).hex()
                 print(hash_obj)
                 if hash_obj == hash:
                     return str(password) 
