@@ -12,7 +12,7 @@ def crack_sha1_hash(hash, use_salts=None):
             hash_obj = hashlib.sha1(password.strip().encode('utf-8')).hexdigest()
             if hash_obj == hash:
                 password = password.split('\n')
-                return str(password[0])
+                return password[0]
     
     else:
         for password in sha1_file:
@@ -24,7 +24,7 @@ def crack_sha1_hash(hash, use_salts=None):
                     hash_obj = hashlib.sha1(hashword.strip().encode('utf-8')).hexdigest()
                     if hash_obj == hash:
                         password = password.split('\n')
-                        return str(password[0]) 
+                        return password[0]
                    
     return "PASSWORD NOT IN DATABASE"
    
