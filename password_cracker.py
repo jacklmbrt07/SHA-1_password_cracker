@@ -15,10 +15,14 @@ def crack_sha1_hash(hash, use_salts=None):
     
     else:
         for password in sha1_file:
-            password = password.strip().encode('utf-8')
+            password = password.strip() #.encode('utf-8')
             for salt in known_salts:
-                salt = salt.strip().encode('utf-8')
-                hash_obj = hashlib.pbkdf2_hmac('sha1', password=password, salt=salt, iterations=1).hex()
+                salt = salt.strip() #.encode('utf-8')
+                hashword = f"{salt}{password}"
+                # print(hashword)
+                hash_obj = hashlib.sha1(hashword.strip().encode('utf-8')).hexdigest()
+
+                # hash_obj = hashlib.pbkdf2_hmac('sha1', password=password, salt=salt, iterations=1).hex()
                 print(hash_obj)
                 if hash_obj == hash:
                     return str(password) 
