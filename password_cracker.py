@@ -8,24 +8,23 @@ def crack_sha1_hash(hash, use_salts=None):
         return "Error: File not found"
     
     if not use_salts == True:
-        for password in sha1_file.readlines():
+        for password in sha1_file:
             hash_obj = hashlib.sha1(password.strip().encode('utf-8')).hexdigest()
             if hash_obj == hash:
-                return str(password)
+                password = password.split('\n')
+                return str(password[0])
     
     else:
         for password in sha1_file:
-            password = password.strip() #.encode('utf-8')
+            password = password.strip() 
             for salt in known_salts:
-                salt = salt.strip() #.encode('utf-8')
-                hashword = f"{salt}{password}"
-                # print(hashword)
-                hash_obj = hashlib.sha1(hashword.strip().encode('utf-8')).hexdigest()
-
-                # hash_obj = hashlib.pbkdf2_hmac('sha1', password=password, salt=salt, iterations=1).hex()
-                print(hash_obj)
-                if hash_obj == hash:
-                    return str(password) 
+                salt = salt.strip() 
+                hashwords = [salt+password, password+salt]
+                for hashword in hashwords:
+                    hash_obj = hashlib.sha1(hashword.strip().encode('utf-8')).hexdigest()
+                    if hash_obj == hash:
+                        password = password.split('\n')
+                        return str(password[0]) 
                    
     return "PASSWORD NOT IN DATABASE"
    
